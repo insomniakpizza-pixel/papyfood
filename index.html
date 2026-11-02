@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Papy Food — Burgers & Casse-Dalle de Nuit à Strasbourg | Ouvert Tard</title>
+<meta name="description" content="Papy Food sert des burgers et casse-dalle faits maison jusqu'au bout de la nuit à Strasbourg. 11 Rue Maria Deraismes — commande sur place ou par téléphone, ouvert 7j/7.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Permanent+Marker&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="icon" id="favicon" href="papyfoodlogo.webp">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FastFoodRestaurant",
+  "name": "Papy Food",
+  "servesCuisine": "Burgers, Sandwichs",
+  "telephone": "+33749819439",
+  "priceRange": "€€",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "11 Rue Maria Deraismes",
+    "postalCode": "67200",
+    "addressLocality": "Strasbourg",
+    "addressCountry": "FR"
+  },
+  "openingHoursSpecification": [
+    { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Sunday","Monday","Tuesday","Wednesday","Thursday"], "opens": "22:00", "closes": "03:00" },
+    { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Friday","Saturday"], "opens": "22:00", "closes": "04:00" }
+  ]
+}
+</script>
+
+<script>
+  // Fallback d'extension : si "bigbbq.webp" n'existe pas, essaie .png, .jpg, .jpeg
+  var EXTS = ['webp','png','jpg','jpeg'];
+  function fb(img){
+    var base = img.getAttribute('data-base');
+    var i = parseInt(img.getAttribute('data-i') || '0', 10) + 1;
+    if (i < EXTS.length){
+      img.setAttribute('data-i', i);
+      img.src = base + '.' + EXTS[i];
+    } else {
+      img.onerror = null;
+      img.style.display = 'none';
+    }
+  }
+</script>
+
+<style>
+  :root{
+    --bg:#0A0A0A;
+    --bg-card:#161412;
+    --gold:#F5B700;
+    --gold-dark:#D19E00;
+    --white:#F5F1E8;
+    --gray:#B8B2A6;
+    --red:#E8402A;
+    --green:#6B8E23;
+    --border-gold:rgba(245,183,0,0.22);
+    --display:'Anton', sans-serif;
+    --brush:'Permanent Marker', cursive;
+    --body:'Inter', sans-serif;
+    --container:1280px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{ background:var(--bg); color:var(--white); font-family:var(--body); line-height:1.6; overflow-x:hidden; }
+  img{max-width:100%; display:block;}
+  a{color:inherit; text-decoration:none;}
+  ul{list-style:none;}
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important; scroll-behavior:auto !important;}
+  }
+
+  .container{max-width:var(--container); margin:0 auto; padding:0 24px;}
+  @media (min-width:1024px){ .container{padding:0 48px;} }
+
+  .eyebrow{ font-family:var(--brush); color:var(--gold); font-size:15px; letter-spacing:1px; display:inline-flex; align-items:center; gap:8px; margin-bottom:8px; }
+  h1,h2,h3{ font-family:var(--display); text-transform:uppercase; line-height:1.02; letter-spacing:0.5px;}
+  .accent{ color:var(--gold); }
+  .brush-divider{ width:120px; height:14px; margin:14px 0 28px; }
+
+  /* Buttons */
+  .btn{
+    display:inline-flex; align-items:center; justify-content:center; gap:10px;
+    font-family:var(--body); font-weight:800; font-size:16px;
+    padding:16px 30px; border-radius:8px; border:2px solid transparent; cursor:pointer;
+    transition:transform .18s ease, box-shadow .18s ease, background .18s ease, color .18s ease;
+    min-height:44px; white-space:nowrap;
+  }
+  .btn-primary{ background:var(--gold); color:#141210; }
+  .btn-primary:hover{ background:var(--gold-dark); transform:translateY(-2px); box-shadow:0 8px 24px rgba(245,183,0,0.25); }
+  .btn-primary:active{ transform:translateY(0); }
+  .btn-outline{ background:transparent; border-color:var(--gold); color:var(--gold); }
+  .btn-outline:hover{ background:rgba(245,183,0,0.1); transform:translateY(-2px); }
+  a:focus-visible, button:focus-visible{ outline:2px solid var(--gold); outline-offset:3px; }
+
+  /* Header */
+  header{ position:fixed; top:0; left:0; right:0; z-index:100; padding:16px 0; transition:background .25s ease, box-shadow .25s ease, padding .25s ease; }
+  header.scrolled{ background:rgba(10,10,10,0.92); backdrop-filter:blur(8px); box-shadow:0 4px 24px rgba(0,0,0,0.5); padding:10px 0; }
+  header .container{ display:flex; align-items:center; justify-content:space-between; gap:16px;}
+  .logo-mark{ display:flex; align-items:center; gap:10px; }
+  .logo-mark img{ width:48px; height:48px; border-radius:50%; border:2px solid var(--gold); object-fit:cover; }
+  .logo-mark span{ font-family:var(--display); font-size:20px; letter-spacing:0.5px; }
+  .logo-mark span em{ font-style:normal; color:var(--gold); }
+  .header-cta{ display:flex; align-items:center; gap:14px; }
+  .header-cta .btn{ padding:12px 20px; font-size:14px; }
+
+  .status-pill{ display:none; align-items:center; gap:6px; font-size:13px; font-weight:700; padding:6px 12px; border-radius:999px; background:rgba(107,142,35,0.15); color:#9CCB57; }
+  .status-pill.closed{ background:rgba(232,64,42,0.15); color:#FF8065; }
+  .status-pill .dot{ width:7px; height:7px; border-radius:50%; background:currentColor; animation:pulse-dot 1.6s infinite; }
+  @media (min-width:768px){ .status-pill{ display:inline-flex; } }
+  @keyframes pulse-dot{ 0%,100%{opacity:1;} 50%{opacity:0.3;} }
+
+  /* Sticky mobile bar */
+  .mobile-bar{
+    position:fixed; bottom:0; left:0; right:0; z-index:110;
+    background:var(--gold); padding:14px 20px;
+    display:flex; align-items:center; justify-content:center; gap:10px;
+    font-weight:800; font-size:15px; color:#141210; box-shadow:0 -6px 20px rgba(0,0,0,0.4);
+  }
+  @media (min-width:768px){ .mobile-bar{ display:none; } }
+  @media (max-width:767px){ body{ padding-bottom:52px; } }
+
+  /* Hero */
+  .hero{
+    position:relative; min-height:100svh; display:flex; align-items:center; padding:140px 0 100px;
+    background:
+      radial-gradient(ellipse 60% 50% at 80% 20%, rgba(245,183,0,0.14), transparent 60%),
+      radial-gradient(ellipse 50% 40% at 10% 80%, rgba(232,64,42,0.08), transparent 60%),
+      var(--bg);
+    overflow:hidden;
+  }
+  .hero .container{ display:grid; grid-template-columns:1fr; gap:48px; align-items:center; }
+  @media (min-width:960px){ .hero .container{ grid-template-columns:1.1fr 0.9fr; } }
+  .hero-copy{ text-align:center; }
+  @media (min-width:960px){ .hero-copy{ text-align:left; } }
+  .hero h1{ font-size:clamp(40px, 8vw, 76px); margin-bottom:20px; }
+  .hero h1 .stroke{ -webkit-text-stroke:2px var(--gold); color:transparent; }
+  .hero p.lead{ font-size:19px; color:var(--gray); max-width:520px; margin:0 auto 32px; }
+  @media (min-width:960px){ .hero p.lead{ margin:0 0 32px; } }
+  .hero-ctas{ display:flex; flex-wrap:wrap; gap:16px; justify-content:center; margin-bottom:20px; }
+  @media (min-width:960px){ .hero-ctas{ justify-content:flex-start; } }
+  .hero-badge{ display:inline-flex; align-items:center; gap:8px; background:rgba(107,142,35,0.15); color:#9CCB57; padding:8px 16px; border-radius:999px; font-size:14px; font-weight:700; }
+  .hero-badge.closed{ background:rgba(232,64,42,0.15); color:#FF8065; }
+  .hero-badge .dot{ width:8px; height:8px; border-radius:50%; background:currentColor; animation:pulse-dot 1.6s infinite; }
+  .hero-visual{ position:relative; display:flex; justify-content:center; }
+  .hero-visual .glow-ring{ position:absolute; inset:0; margin:auto; width:340px; height:340px; border-radius:50%; background:radial-gradient(circle, rgba(245,183,0,0.25), transparent 70%); filter:blur(20px); animation:float 6s ease-in-out infinite; }
+  @keyframes float{ 0%,100%{ transform:translateY(0);} 50%{ transform:translateY(-14px);} }
+  .hero-visual img{ position:relative; width:min(360px, 80vw); border-radius:50%; border:3px solid var(--gold); box-shadow:0 0 60px rgba(245,183,0,0.2); }
+
+  .fade-up{ opacity:0; transform:translateY(24px); transition:opacity .7s ease, transform .7s ease; }
+  .fade-up.is-visible{ opacity:1; transform:translateY(0); }
+
+  /* Sections */
+  section{ padding:88px 0; position:relative; }
+  .section-head{ text-align:center; max-width:640px; margin:0 auto 48px; }
+  .section-head .brush-divider{ margin-left:auto; margin-right:auto; }
+  .section-head h2{ font-size:clamp(30px,5vw,48px); }
+  .section-head p{ color:var(--gray); font-size:17px; margin-top:12px; }
+
+  /* Menu */
+  .price-badge{ background:var(--gold); color:#141210; font-weight:900; font-size:20px; padding:6px 14px; border-radius:6px; transform:rotate(-2deg); display:inline-block; }
+  .menu-category{ margin-bottom:56px; }
+  .menu-category-head{ display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; margin-bottom:6px; }
+  .menu-category-head h3{ font-size:clamp(22px,4vw,30px); }
+  .menu-category-desc{ color:var(--gray); font-size:14px; margin-bottom:20px; }
+  .variant-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:14px; }
+  @media (min-width:640px){ .variant-grid{ grid-template-columns:repeat(3,1fr); } }
+  @media (min-width:900px){ .variant-grid{ grid-template-columns:repeat(5,1fr); } }
+  .variant-card{ background:var(--bg-card); border:1px solid var(--border-gold); border-radius:12px; overflow:hidden; text-align:center; transition:transform .22s ease, border-color .22s ease, box-shadow .22s ease; }
+  .variant-card:hover{ transform:translateY(-4px); border-color:var(--gold); box-shadow:0 10px 26px rgba(245,183,0,0.12); }
+  .variant-img{ aspect-ratio:1/1; overflow:hidden; background:#000; }
+  .variant-img img{ width:100%; height:100%; object-fit:cover; transition:transform .4s ease; }
+  .variant-card:hover .variant-img img{ transform:scale(1.06); }
+  .variant-label{ display:block; padding:8px 6px; font-size:13px; font-weight:800; text-transform:uppercase; letter-spacing:0.3px; }
+  .menu-cta{ text-align:center; margin-top:40px; display:flex; gap:14px; justify-content:center; flex-wrap:wrap; }
+  .sauces-row{ margin-top:40px; display:flex; flex-wrap:wrap; gap:10px; justify-content:center; }
+  .sauce-chip{ display:flex; align-items:center; gap:8px; background:var(--bg-card); border:1px solid var(--border-gold); padding:8px 14px; border-radius:999px; font-size:13px; font-weight:600; }
+  .sauce-chip .swatch{ width:12px; height:12px; border-radius:50%; }
+  .onsite-note{ text-align:center; color:var(--gold); font-weight:700; font-size:15px; margin-top:28px; }
+
+  /* Lightbox carte */
+  dialog.menu-modal{ background:#000; border:1px solid var(--gold); border-radius:12px; padding:12px; max-width:min(1200px,96vw); width:100%; color:var(--white); margin:auto; }
+  dialog.menu-modal::backdrop{ background:rgba(0,0,0,0.85); }
+  dialog.menu-modal img{ width:100%; height:auto; border-radius:8px; }
+  dialog.menu-modal .close{ display:block; margin:0 0 10px auto; background:var(--gold); color:#141210; border:none; font-weight:800; padding:8px 16px; border-radius:6px; cursor:pointer; }
+
+  /* Horaires & Lieu */
+  .hours-lieu{ display:grid; grid-template-columns:1fr; gap:32px; }
+  @media (min-width:900px){ .hours-lieu{ grid-template-columns:1fr 1fr; } }
+  .hours-card{ background:var(--bg-card); border:1px solid var(--border-gold); border-radius:14px; padding:28px; }
+  .hours-card table{ width:100%; border-collapse:collapse; }
+  .hours-card td{ padding:12px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:15px; color:var(--gray); }
+  .hours-card td:last-child{ text-align:right; }
+  .hours-card tr.today td{ color:var(--gold); font-weight:800; }
+  .hours-card tr:last-child td{ border-bottom:none; }
+  .hours-note{ margin-top:16px; font-size:14px; color:var(--gold); font-weight:700; }
+  .map-card{ background:var(--bg-card); border:1px solid var(--border-gold); border-radius:14px; overflow:hidden; display:flex; flex-direction:column; }
+  .map-card iframe{ width:100%; height:280px; border:0; filter:grayscale(0.3) invert(0.9) contrast(0.85); }
+  .map-card .map-footer{ padding:20px; display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:12px; }
+  .map-card address{ font-style:normal; color:var(--gray); font-size:14px; }
+
+  /* Avis */
+  .avis-grid{ display:grid; grid-template-columns:1fr; gap:20px; margin-bottom:56px; }
+  @media (min-width:768px){ .avis-grid{ grid-template-columns:repeat(3,1fr); } }
+  .avis-card{ background:var(--bg-card); border:1px solid var(--border-gold); border-radius:14px; padding:24px; }
+  .stars{ color:var(--gold); font-size:16px; letter-spacing:2px; margin-bottom:12px; }
+  .avis-card p.quote{ font-size:15px; margin-bottom:16px; }
+  .avis-card .who{ font-size:13px; color:var(--gray); font-weight:600; }
+  .stats-row{ display:grid; grid-template-columns:1fr; gap:24px; text-align:center; }
+  @media (min-width:768px){ .stats-row{ grid-template-columns:repeat(3,1fr); } }
+  .stat{ padding:20px; }
+  .stat .num{ font-family:var(--display); font-size:clamp(36px,6vw,56px); color:var(--gold); }
+  .stat .label{ color:var(--gray); font-size:14px; margin-top:6px; }
+
+
+  /* FAQ */
+  .faq-list{ max-width:760px; margin:0 auto; display:flex; flex-direction:column; gap:14px; }
+  .faq-item{ background:var(--bg-card); border:1px solid var(--border-gold); border-radius:12px; overflow:hidden; }
+  .faq-question{ width:100%; display:flex; align-items:center; justify-content:space-between; gap:16px; padding:20px 22px; background:transparent; border:none; color:var(--white); font-family:var(--body); font-weight:700; font-size:16px; cursor:pointer; text-align:left; }
+  .faq-question .chevron{ transition:transform .25s ease; color:var(--gold); flex-shrink:0; }
+  .faq-item.open .faq-question .chevron{ transform:rotate(180deg); }
+  .faq-item.open .faq-question{ background:rgba(245,183,0,0.05); }
+  .faq-answer{ max-height:0; overflow:hidden; transition:max-height .3s ease; }
+  .faq-answer p{ padding:0 22px 20px; color:var(--gray); font-size:15px; }
+
+  /* CTA final */
+  .cta-final{ background:linear-gradient(180deg, rgba(245,183,0,0.06), transparent), var(--bg-card); border-top:1px solid var(--border-gold); border-bottom:1px solid var(--border-gold); text-align:center; padding:100px 0; }
+  .cta-final h2{ font-size:clamp(32px,6vw,56px); margin-bottom:12px; }
+  .cta-final p{ color:var(--gray); margin-bottom:28px; }
+  .cta-final .btn-primary{ font-size:20px; padding:20px 44px; animation:glow-pulse 2.4s infinite; }
+  @keyframes glow-pulse{ 0%,100%{ box-shadow:0 0 0 0 rgba(245,183,0,0.35); } 50%{ box-shadow:0 0 0 14px rgba(245,183,0,0); } }
+
+  /* Footer */
+  footer{ background:#070605; padding:64px 0 32px; }
+  .footer-grid{ display:grid; grid-template-columns:1fr; gap:40px; padding-bottom:36px; border-bottom:1px solid var(--border-gold); }
+  @media (min-width:768px){ .footer-grid{ grid-template-columns:1.4fr 1fr 1fr; } }
+  .footer-brand .logo-mark{ margin-bottom:14px; }
+  .footer-brand p{ color:var(--gray); font-size:14px; max-width:320px; }
+  .footer-col h4{ font-family:var(--body); font-size:14px; letter-spacing:1px; text-transform:uppercase; color:var(--gold); margin-bottom:16px; }
+  .footer-col ul li{ margin-bottom:10px; color:var(--gray); font-size:14px; }
+  .footer-col a{ color:var(--gray); font-size:14px; transition:color .2s ease; }
+  .footer-col a:hover{ color:var(--gold); }
+  .social-row{ display:flex; gap:12px; margin-top:6px; }
+  .social-row a{ width:38px; height:38px; border-radius:50%; border:1px solid var(--border-gold); display:flex; align-items:center; justify-content:center; transition:box-shadow .2s ease, border-color .2s ease; }
+  .social-row a:hover{ border-color:var(--gold); box-shadow:0 0 14px rgba(245,183,0,0.3); }
+  .footer-bottom{ padding-top:24px; display:flex; flex-wrap:wrap; gap:12px; align-items:center; justify-content:space-between; font-size:13px; color:var(--gray); }
+  .footer-bottom a{ color:var(--gray); }
+  .footer-bottom a:hover{ color:var(--gold); }
+
+  .skip-link{ position:absolute; left:-9999px; top:0; background:var(--gold); color:#141210; padding:12px 20px; z-index:200; font-weight:800; }
+  .skip-link:focus{ left:16px; top:16px; }
+</style>
+</head>
+<body>
+
+<a class="skip-link" href="#main">Aller au contenu</a>
+
+<!-- ===================== HEADER ===================== -->
+<header id="site-header">
+  <div class="container">
+    <a href="#" class="logo-mark" aria-label="Papy Food — Accueil">
+      <img src="papyfoodlogo.webp" data-base="papyfoodlogo" onerror="fb(this)" alt="Logo Papy Food">
+      <span>PAPY <em>FOOD</em></span>
+    </a>
+    <div class="header-cta">
+      <span class="status-pill" id="status-pill"><span class="dot"></span> <span id="status-text">Vérification…</span></span>
+      <a href="tel:+33749819439" class="btn btn-primary">📞 Appeler</a>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ===================== HERO ===================== -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-copy fade-up">
+        <span class="eyebrow">🌙 Ouvert de nuit, 7j/7</span>
+        <h1>Affamé la nuit ?<br><span class="stroke">On gère.</span></h1>
+        <p class="lead">Burgers et casse-dalle faits maison, généreux, à prix juste — commande sur place ou par téléphone, même à 2h du matin.</p>
+        <div class="hero-ctas">
+          <a href="tel:+33749819439" class="btn btn-primary">📞 Commander</a>
+          <a href="#menu" class="btn btn-outline">🍔 Voir le menu ↓</a>
+        </div>
+        <span class="hero-badge" id="hero-badge"><span class="dot"></span> <span id="hero-badge-text">Ouvert maintenant</span></span>
+      </div>
+      <div class="hero-visual fade-up">
+        <div class="glow-ring" aria-hidden="true"></div>
+        <img src="papyfoodlogo.webp" data-base="papyfoodlogo" onerror="fb(this)" alt="Mascotte Papy Food, un papy barbu avec casquette et lunettes noires">
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== MENU ===================== -->
+  <section id="menu">
+    <div class="container">
+      <div class="section-head fade-up">
+        <span class="eyebrow">La carte</span>
+        <h2>La carte <span class="accent">complète</span></h2>
+        <svg class="brush-divider" viewBox="0 0 120 14" aria-hidden="true"><path d="M2 8 Q 20 2, 40 8 T 80 7 T 118 6" stroke="#F5B700" stroke-width="5" fill="none" stroke-linecap="round"/></svg>
+        <p>Fait maison, généreux, servi jusqu'au bout de la nuit — chaque produit décliné en 5 sauces.</p>
+      </div>
+
+      <!--
+        POUR MODIFIER LE MENU :
+        - Chaque bloc <div class="menu-category"> = un produit de base (titre, prix, description).
+        - Chaque <article class="variant-card"> = une variante sauce.
+        - Les images sont cherchées par nom (ex : bigbbq) avec extension .webp (ou .png, .jpg, .jpeg).
+      -->
+
+      <div class="menu-category fade-up">
+        <div class="menu-category-head">
+          <h3>👑 Le Big</h3>
+          <span class="price-badge">8,90 €</span>
+        </div>
+        <p class="menu-category-desc">Grand pain burger, 2 steaks, 2 fromages, salade, sauce au choix.</p>
+        <div class="variant-grid">
+          <article class="variant-card">
+            <div class="variant-img"><img src="bigcurry.webp" data-base="bigcurry" onerror="fb(this)" loading="lazy" alt="Le Big sauce Curry"></div>
+            <span class="variant-label" style="background:#F5B700;color:#141210;">Curry</span>
+          </article>
+          <article class="variant-card">
+            <div class="variant-img"><img src="bigbrazil.webp" data-base="bigbrazil" onerror="fb(this)" loading="lazy" alt="Le Big sauce Brazil"></div>
+            <span class="variant-label" style="background:#4CAF50;color:#fff;">Brazil</span>
+          </article>
+          <article class="variant-card">
+            <div class="variant-img"><img src="bigbiggy.webp" data-base="bigbiggy" onerror="fb(this)" loading="lazy" alt="Le Big sauce Biggy"></div>
+            <span class="variant-label" style="background:#E8821A;color:#141210;">Biggy</span>
+          </article>
+          <article class="variant-card">
+            <div class="variant-img"><img src="bigpoivre.webp" data-base="bigpoivre" onerror="fb(this)" loading="lazy" alt="Le Big sauce Poivre"></div>
+            <span class="variant-label" style="background:#F5F1E8;color:#141210;">Poivre</span>
+          </article>
+          <article class="variant-card">
+            <div class="variant-img"><img src="bigbbq.webp" data-base="bigbbq" onerror="fb(this)" loading="lazy" alt="Le Big sauce Barbecue"></div>
+            <span class="variant-label" style="background:#E8402A;color:#fff;">Barbecue</span>
+          </article>
+        </div>
+      </div>
+
+      <div class="menu-category fade-up">
+        <div class="menu-category-head">
+          <h3>🐔 Le Double Chicken</h3>
+          <span class="price-badge">8,90 €</span>
+        </div>
+        <p class="menu-category-desc">2 burgers (1 steak de poulet par burger), fromage, salade, sauce au choix.</p>
+        <div class="variant-grid">
+          <article class="variant-card">
+            <div class="variant-img"><img src="chickencurry.webp" data-base="chickencurry" onerror="fb(this)" loading="lazy" alt="Double Chicken sauce Curry"></div>
+            <span class="variant-label" style="background:#F5B700;color:#141210;">Curry</span>
+          </article>
+          <article class="variant-card">
+            <div class="variant-img"><img src="chickenbrazil.webp" data-base="chickenbrazil" onerror="fb(this)" loading="lazy" alt="Double Chicken sauce Brazil"></div>
+            <span class="variant-label" style="background:#4CAF50;color:#fff;">Brazil</span>
+          </article>
+          <article class="variant-card">
+            <div class="variant-img"><img src="chickenbiggy.webp" data-base="chickenbiggy" onerror="fb(this)" loading="lazy" alt="Double Chicken sauce Biggy"></div>
+            <span class="variant-label" style="background:#E8821A;color:#141210;">Biggy</span>
+          </article>
+          <article class="variant-card">
+            <div class="variant-img"><img src="chickenpoivre.webp" data-base="chickenpoivre" onerror="fb(this)" loading="lazy" alt="Double Chicken sauce Poivre"></div>
+            <span class="variant-label" style="background:#F5F1E8;color:#141210;">Poivre</span>
+          </article>
+          <article class="variant-card">
+            <div class="variant-img"><img src="chickenbbq.webp" data-base="chickenbbq" onerror="fb(this)" loading="lazy" alt="Double Chicken sauce Barbecue"></div>
+            <span class="variant-label" style="background:#E8402A;color:#fff;">Barbecue</span>
+          </article>
+        </div>
+      </div>
+
+      <div class="menu-category fade-up">
+        <div class="menu-category-head">
+          <h3>🌯 Casse-Dalle Poulet</h3>
+          <span class="price-badge">7,90 €</span>
+        </div>
+        <p class="menu-category-desc">Steak de poulet, salade, fromage, sauce au choix.</p>
+        <div class="variant-grid">
+          <article class="variant-card">
+            <div class="variant-img"><img src="cassepouletcurry.webp" data-base="cassepouletcurry" onerror="fb(this)" loading="lazy" alt="Casse-Dalle Poulet sauce Curry"></div>
+            <span class="variant-label" style="background:#F5B700;color:#141210;">Curry</span>
+          </article>
+          <article class="variant-card">
+            <div class="variant-img"><img src="cassepouletbrazil.webp" data-base="cassepouletbrazil" onerror="fb(this)" loading="lazy" alt="Casse-Dalle Poulet sauce Brazil"></div>
+            <span class="variant-label" style="background:#4CAF50;color:#fff;">Brazil</span>
+          </article>
+          <article class="variant-card">
+            <div class="variant-img"><img src="cassepouletbiggy.webp" data-base="cassepouletbiggy" onerror="fb(this)" loading="lazy" alt="Casse-Dalle Poulet sauce Biggy"></div>
+            <span class="variant-label" style="background:#E8821A;color:#141210;">Biggy</span>
+          </article>
+          <article class="variant-card">
+            <div class="variant-img"><img src="cassepouletpoivre.webp" data-base="cassepouletpoivre" onerror="fb(this)" loading="lazy" alt="Casse-Dalle Poulet sauce Poivre"></div>
+            <span class="variant-label" style="background:#F5F1E8;color:#141210;">Poivre</span>
+          </article>
+          <article class="variant-card">
+            <div class="variant-img"><img src="cassepouletbbq.webp" data-base="cassepouletbbq" onerror="fb(this)" loading="lazy" alt="Casse-Dalle Poulet sauce Barbecue"></div>
+            <span class="variant-label" style="background:#E8402A;color:#fff;">Barbecue</span>
+          </article>
+        </div>
+      </div>
+
+      <div class="menu-category fade-up">
+        <div class="menu-category-head">
+          <h3>🔥 Casse-Dalle Boeuf</h3>
+          <span class="price-badge">7,90 €</span>
+        </div>
+        <p class="menu-category-desc">Steak de boeuf, salade, fromage, sauce au choix.</p>
+        <div class="variant-grid">
+          <article class="variant-card">
+            <div class="variant-img"><img src="casseboeufcurry.webp" data-base="casseboeufcurry" onerror="fb(this)" loading="lazy" alt="Casse-Dalle Boeuf sauce Curry"></div>
+            <span class="variant-label" style="background:#F5B700;color:#141210;">Curry</span>
+          </article>
+          <article class="variant-card">
+            <div class="variant-img"><img src="casseboeufbrazil.webp" data-base="casseboeufbrazil" onerror="fb(this)" loading="lazy" alt="Casse-Dalle Boeuf sauce Brazil"></div>
+            <span class="variant-label" style="background:#4CAF50;color:#fff;">Brazil</span>
+          </article>
+          <article class="variant-card">
+            <div class="variant-img"><img src="casseboeufbiggy.webp" data-base="casseboeufbiggy" onerror="fb(this)" loading="lazy" alt="Casse-Dalle Boeuf sauce Biggy"></div>
+            <span class="variant-label" style="background:#E8821A;color:#141210;">Biggy</span>
+          </article>
+          <article class="variant-card">
+            <div class="variant-img"><img src="casseboeufpoivre.webp" data-base="casseboeufpoivre" onerror="fb(this)" loading="lazy" alt="Casse-Dalle Boeuf sauce Poivre"></div>
+            <span class="variant-label" style="background:#F5F1E8;color:#141210;">Poivre</span>
+          </article>
+          <article class="variant-card">
+            <div class="variant-img"><img src="casseboeufbbq.webp" data-base="casseboeufbbq" onerror="fb(this)" loading="lazy" alt="Casse-Dalle Boeuf sauce Barbecue"></div>
+            <span class="variant-label" style="background:#E8402A;color:#fff;">Barbecue</span>
+          </article>
+        </div>
+      </div>
+
+      <div class="sauces-row fade-up">
+        <span class="sauce-chip"><span class="swatch" style="background:#F5B700"></span>Curry</span>
+        <span class="sauce-chip"><span class="swatch" style="background:#4CAF50"></span>Brazil</span>
+        <span class="sauce-chip"><span class="swatch" style="background:#E8821A"></span>Biggy</span>
+        <span class="sauce-chip"><span class="swatch" style="background:#F5F1E8"></span>Poivre</span>
+        <span class="sauce-chip"><span class="swatch" style="background:#E8402A"></span>Barbecue</span>
+      </div>
+
+      <p class="onsite-note fade-up">🛎️ Commande sur place ou par téléphone : <a href="tel:+33749819439" style="text-decoration:underline;">07 49 81 94 39</a></p>
+
+      <div class="menu-cta fade-up">
+        <button class="btn btn-outline" id="open-menu" type="button">🖼️ Voir la carte en grand</button>
+        <a href="tel:+33749819439" class="btn btn-primary">📞 Commander</a>
+      </div>
+    </div>
+  </section>
+
+  <dialog class="menu-modal" id="menu-modal" aria-label="Carte Papy Food">
+    <button class="close" id="close-menu" type="button">Fermer ✕</button>
+    <img src="menu.webp" data-base="menu" onerror="fb(this)" alt="Carte complète Papy Food : burgers et casse-dalle" loading="lazy">
+  </dialog>
+
+  <!-- ===================== HORAIRES & LIEU ===================== -->
+  <section id="horaires">
+    <div class="container">
+      <div class="section-head fade-up">
+        <span class="eyebrow">🌙 On est là quand les autres dorment</span>
+        <h2>Horaires & <span class="accent">Lieu</span></h2>
+        <svg class="brush-divider" viewBox="0 0 120 14" aria-hidden="true"><path d="M2 8 Q 20 2, 40 8 T 80 7 T 118 6" stroke="#F5B700" stroke-width="5" fill="none" stroke-linecap="round"/></svg>
+      </div>
+
+      <div class="hours-lieu">
+        <div class="hours-card fade-up">
+          <table id="hours-table">
+            <tr data-day="1"><td>Lundi</td><td>22h – 03h</td></tr>
+            <tr data-day="2"><td>Mardi</td><td>22h – 03h</td></tr>
+            <tr data-day="3"><td>Mercredi</td><td>22h – 03h</td></tr>
+            <tr data-day="4"><td>Jeudi</td><td>22h – 03h</td></tr>
+            <tr data-day="5"><td>Vendredi</td><td>22h – 04h</td></tr>
+            <tr data-day="6"><td>Samedi</td><td>22h – 04h</td></tr>
+            <tr data-day="0"><td>Dimanche</td><td>22h – 03h</td></tr>
+          </table>
+          <p class="hours-note">🛎️ Commande sur place ou par téléphone.</p>
+        </div>
+        <div class="map-card fade-up">
+          <iframe src="https://www.google.com/maps?q=11+Rue+Maria+Deraismes,+67200+Strasbourg&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Localisation Papy Food"></iframe>
+          <div class="map-footer">
+            <address>📍 11 Rue Maria Deraismes, 67200 Strasbourg</address>
+            <a href="https://www.google.com/maps?q=11+Rue+Maria+Deraismes,+67200+Strasbourg" target="_blank" rel="noopener" class="btn btn-outline" style="padding:10px 18px;">Itinéraire</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== AVIS ===================== -->
+  <section id="avis">
+    <div class="container">
+      <div class="section-head fade-up">
+        <span class="eyebrow">Preuve sociale</span>
+        <h2>Ils ont testé, <span class="accent">ils reviennent</span></h2>
+        <svg class="brush-divider" viewBox="0 0 120 14" aria-hidden="true"><path d="M2 8 Q 20 2, 40 8 T 80 7 T 118 6" stroke="#F5B700" stroke-width="5" fill="none" stroke-linecap="round"/></svg>
+      </div>
+      <div class="avis-grid">
+        <div class="avis-card fade-up"><div class="stars">★★★★★</div><p class="quote">Le Big à 2h du mat', meilleure décision de ma soirée.</p><div class="who">— Client Google</div></div>
+        <div class="avis-card fade-up"><div class="stars">★★★★★</div><p class="quote">Le Casse-Dalle Boeuf sauce Biggy, je recommande à 100%. Équipe toujours souriante.</p><div class="who">— Avis client</div></div>
+        <div class="avis-card fade-up"><div class="stars">★★★★★</div><p class="quote">Enfin un endroit ouvert tard qui fait de la vraie qualité.</p><div class="who">— Avis Google</div></div>
+      </div>
+      <div class="stats-row">
+        <div class="stat fade-up"><div class="num">20</div><div class="label">Recettes à la carte</div></div>
+        <div class="stat fade-up"><div class="num">5</div><div class="label">Sauces au choix</div></div>
+        <div class="stat fade-up"><div class="num">7j/7</div><div class="label">Ouvert jusqu'à tard</div></div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ===================== FAQ ===================== -->
+  <section id="faq">
+    <div class="container">
+      <div class="section-head fade-up">
+        <span class="eyebrow">Besoin d'infos ?</span>
+        <h2>Questions <span class="accent">fréquentes</span></h2>
+        <svg class="brush-divider" viewBox="0 0 120 14" aria-hidden="true"><path d="M2 8 Q 20 2, 40 8 T 80 7 T 118 6" stroke="#F5B700" stroke-width="5" fill="none" stroke-linecap="round"/></svg>
+      </div>
+      <div class="faq-list" id="faq-list">
+        <div class="faq-item"><button class="faq-question" aria-expanded="false">Jusqu'à quelle heure êtes-vous ouverts ? <span class="chevron">▾</span></button><div class="faq-answer"><p>Nous sommes ouverts 7j/7 de 22h à 3h du matin, et jusqu'à 4h le vendredi et le samedi.</p></div></div>
+        <div class="faq-item"><button class="faq-question" aria-expanded="false">Comment passer commande ? <span class="chevron">▾</span></button><div class="faq-answer"><p>Directement sur place, au comptoir, ou par téléphone au 07 49 81 94 39. Choisis ton produit, ta sauce, et c'est parti.</p></div></div>
+        <div class="faq-item"><button class="faq-question" aria-expanded="false">Faites-vous la livraison ? <span class="chevron">▾</span></button><div class="faq-answer"><p>Pour le moment, Papy Food sert uniquement sur place et à emporter directement au comptoir.</p></div></div>
+        <div class="faq-item"><button class="faq-question" aria-expanded="false">Quelles sauces proposez-vous ? <span class="chevron">▾</span></button><div class="faq-answer"><p>Curry, Brazil, Biggy, Poivre et Barbecue — chaque produit est disponible dans les 5 sauces.</p></div></div>
+        <div class="faq-item"><button class="faq-question" aria-expanded="false">Quelle est la différence entre Big et Double Chicken ? <span class="chevron">▾</span></button><div class="faq-answer"><p>Le Big, c'est 2 steaks, 2 fromages, salade et sauce. Le Double Chicken, c'est 2 burgers avec 1 steak de poulet chacun, fromage, salade et sauce.</p></div></div>
+        <div class="faq-item"><button class="faq-question" aria-expanded="false">Où êtes-vous situés ? <span class="chevron">▾</span></button><div class="faq-answer"><p>Au 11 Rue Maria Deraismes, 67200 Strasbourg — voir la carte ci-dessus pour l'itinéraire.</p></div></div>
+        <div class="faq-item"><button class="faq-question" aria-expanded="false">Acceptez-vous les paiements par carte ? <span class="chevron">▾</span></button><div class="faq-answer"><p>Espèces et carte bancaire sont acceptées sur place.</p></div></div>
+        <div class="faq-item"><button class="faq-question" aria-expanded="false">Vos burgers sont-ils faits maison ? <span class="chevron">▾</span></button><div class="faq-answer"><p>Oui, préparés avec soin à la commande, pas de surgelé industriel.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== CTA FINAL ===================== -->
+  <section class="cta-final">
+    <div class="container fade-up">
+      <h2>Une envie de nuit ?<br><span class="accent">Viens nous voir.</span></h2>
+      <p>11 Rue Maria Deraismes, 67200 Strasbourg — commande sur place ou par téléphone.</p>
+      <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;"><a href="tel:+33749819439" class="btn btn-primary">📞 Appeler pour commander</a><a href="https://www.google.com/maps?q=11+Rue+Maria+Deraismes,+67200+Strasbourg" target="_blank" rel="noopener" class="btn btn-outline">📍 Itinéraire</a></div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ===================== FOOTER ===================== -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="logo-mark">
+          <img src="papyfoodlogo.webp" data-base="papyfoodlogo" onerror="fb(this)" alt="Logo Papy Food">
+          <span>PAPY <em>FOOD</em></span>
+        </div>
+        <p>Le réconfort qui ne dort jamais. Burgers et casse-dalle faits maison, servis jusqu'au bout de la nuit.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Navigation</h4>
+        <ul>
+          <li><a href="#menu">Menu</a></li>
+          <li><a href="#horaires">Horaires</a></li>
+          <li><a href="#avis">Avis</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Infos</h4>
+        <ul>
+          <li>📍 11 Rue Maria Deraismes, 67200 Strasbourg</li>
+          <li>🌙 22h – 3h (4h ven. & sam.)</li>
+          <li>📞 <a href="tel:+33749819439">07 49 81 94 39</a></li>
+          <li>🛎️ Sur place ou par téléphone</li>
+        </ul>
+        <div class="social-row">
+          <a href="https://instagram.com" target="_blank" rel="noopener" aria-label="Instagram">📷</a>
+          <a href="https://facebook.com" target="_blank" rel="noopener" aria-label="Facebook">📘</a>
+          <a href="https://tiktok.com" target="_blank" rel="noopener" aria-label="TikTok">🎵</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Papy Food — Tous droits réservés</span>
+      <span><a href="#">Mentions légales</a> · <a href="#">CGV</a></span>
+    </div>
+  </div>
+</footer>
+
+<a href="tel:+33749819439" class="mobile-bar">📞 Commander — 07 49 81 94 39</a>
+
+<script>
+  // Header
+  var header = document.getElementById('site-header');
+  window.addEventListener('scroll', function(){ header.classList.toggle('scrolled', window.scrollY > 20); });
+
+  // Favicon = logo qui a réellement chargé
+  window.addEventListener('load', function(){
+    var logo = document.querySelector('.logo-mark img');
+    if (logo && logo.currentSrc) document.getElementById('favicon').href = logo.currentSrc;
+  });
+
+  // Reveal on scroll
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){ if (e.isIntersecting){ e.target.classList.add('is-visible'); io.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.fade-up').forEach(function(el){ io.observe(el); });
+
+  // FAQ accordéon exclusif
+  var faqItems = document.querySelectorAll('.faq-item');
+  faqItems.forEach(function(item){
+    var btn = item.querySelector('.faq-question');
+    var answer = item.querySelector('.faq-answer');
+    btn.addEventListener('click', function(){
+      var wasOpen = item.classList.contains('open');
+      faqItems.forEach(function(o){
+        o.classList.remove('open');
+        o.querySelector('.faq-question').setAttribute('aria-expanded','false');
+        o.querySelector('.faq-answer').style.maxHeight = null;
+      });
+      if (!wasOpen){
+        item.classList.add('open');
+        btn.setAttribute('aria-expanded','true');
+        answer.style.maxHeight = answer.scrollHeight + 'px';
+      }
+    });
+  });
+
+  // Carte en grand (dialog)
+  var modal = document.getElementById('menu-modal');
+  document.getElementById('open-menu').addEventListener('click', function(){ modal.showModal(); });
+  document.getElementById('close-menu').addEventListener('click', function(){ modal.close(); });
+  modal.addEventListener('click', function(e){ if (e.target === modal) modal.close(); });
+
+  // Horaires : 22h–3h, ven/sam 22h–4h
+  var hoursData = {0:{open:22,close:3},1:{open:22,close:3},2:{open:22,close:3},3:{open:22,close:3},4:{open:22,close:3},5:{open:22,close:4},6:{open:22,close:4}};
+  var now = new Date(), day = now.getDay(), hour = now.getHours();
+  document.querySelectorAll('#hours-table tr').forEach(function(row){
+    if (parseInt(row.dataset.day,10) === day) row.classList.add('today');
+  });
+  function isOpenNow(){
+    if (hour >= hoursData[day].open) return true;
+    if (hour < hoursData[(day+6)%7].close) return true;
+    return false;
+  }
+  var pill = document.getElementById('status-pill'), pillText = document.getElementById('status-text');
+  var badge = document.getElementById('hero-badge'), badgeText = document.getElementById('hero-badge-text');
+  if (isOpenNow()){
+    pillText.textContent = 'Ouvert maintenant';
+    badgeText.textContent = 'Ouvert maintenant';
+  } else {
+    pill.classList.add('closed'); badge.classList.add('closed');
+    pillText.textContent = 'Fermé — réouvre à 22h';
+    badgeText.textContent = 'Fermé — réouvre à 22h';
+  }
+
+</script>
+</body>
+</html>
